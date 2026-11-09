@@ -1,0 +1,52 @@
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "1234"
+}
+
+> {% client.global.set("adminToken", response.body.token); %}
+
+### 2. Login user simple (enregistre le token dans la variable userToken)
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "1111"
+}
+
+> {% client.global.set("userToken", response.body.token); %}
+
+### 3. Profil avec le token admin -> 200
+GET http://localhost:8080/api/user/profile
+Authorization: Bearer {{adminToken}}
+
+### 4. Profil avec le token user -> 200
+GET http://localhost:8080/api/user/profile
+Authorization: Bearer {{userToken}}
+
+### 5. Dashboard admin avec le token admin -> 200
+GET http://localhost:8080/api/admin/dashboard
+Authorization: Bearer {{adminToken}}
+
+### 6. Dashboard admin avec le token user -> 403 (rôle insuffisant)
+GET http://localhost:8080/api/admin/dashboard
+Authorization: Bearer {{userToken}}
+
+### 7. Sans token -> 403
+GET http://localhost:8080/api/user/profile
+
+### 8. Token invalide -> 403
+GET http://localhost:8080/api/user/profile
+Authorization: Bearer abc.def.ghi
+
+### 9. Mauvais mot de passe -> 401
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "mauvais"
+}
