@@ -60,9 +60,11 @@ src/main/java/ma/ens/security
 └── web/            AuthController, TestController
 ```
 
-## Notes sur l'implémentation
-- Le secret et la durée du token sont lus depuis `application.properties` (`jwt.secret`, `jwt.expiration`).
-  Le secret peut être surchargé par la variable d'environnement `JWT_SECRET`.
-- Le filtre valide le token (signature + expiration) avant de lire le nom d'utilisateur, et ignore les comptes désactivés.
-- Un `PasswordEncoder` BCrypt est déclaré : Spring Security l'utilise avec `CustomUserDetailsService` pour vérifier les mots de passe au login.
-- CSRF est désactivé et les sessions sont `STATELESS`, comme attendu pour une API REST avec JWT.
+
+## Screen
+
+<img width="869" height="343" alt="image" src="https://github.com/user-attachments/assets/d6532360-7a02-4665-91b3-67c3299635b7" />
+
+<img width="526" height="170" alt="image" src="https://github.com/user-attachments/assets/77a22f26-0449-468f-b1ee-8303b6cf202c" />
+
+
